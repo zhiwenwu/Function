@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.85"
+            android:layout_gravity="center"
             android:text="账号" />
 
         <EditText
@@ -29,13 +30,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center"
         >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.85"
-            android:text="密保问题" />
+            android:text="密保问题"
+            android:layout_gravity="center"/>
 
         <EditText
             android:id="@+id/ma"
@@ -49,12 +52,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center"
         >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.85"
+            android:layout_gravity="center"
             android:text="密保答案" />
 
         <EditText
@@ -74,12 +79,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.85"
+            android:layout_gravity="center"
             android:text="密码" />
 
         <TextView
             android:id="@+id/mima"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.15" />
 
     </LinearLayout>
@@ -94,7 +101,9 @@
             android:id="@+id/chazhao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="找回密码"/>
+            android:layout_gravity="center"
+            android:text="找回密码"
+            android:background="#00FFFF"/>
 
     </LinearLayout>
 

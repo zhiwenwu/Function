@@ -15,13 +15,14 @@ import android.widget.Toast;
 
 public class ForgetActivity extends AppCompatActivity {
 
-
+    private static final String TAG = "ForgetActivity";
     private EditText account;
     private EditText Security;
     private EditText answer;
     private TextView password;
     private Button lookup;
     private DataBases dataBases;
+    private int Err = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,27 +49,46 @@ public class ForgetActivity extends AppCompatActivity {
 
                 Cursor cursor = db.query("Users",null,null,null,null,null,null);
 
+
+                if(account.getText().toString().equals(""))
+                {
+                    Toast.makeText(ForgetActivity.this,"账号不能为空!",Toast.LENGTH_LONG).show();
+
+                }else if(Security.getText().toString().equals("")){
+
+                    Toast.makeText(ForgetActivity.this,"密保问题不能为空!",Toast.LENGTH_LONG).show();
+
+                }else if(answer.getText().toString().equals("")){
+
+                    Toast.makeText(ForgetActivity.this,"密保问题答案不能为空!",Toast.LENGTH_LONG).show();
+
+                }
+                else{
+
                 if(cursor.moveToFirst()){
                     do {
-                        if(account.getText().toString().equals(cursor.getString(cursor.getColumnIndex("User")))){
-                            if(Security.getText().toString().equals(cursor.getString(cursor.getColumnIndex("Security")))){
-                                if(answer.getText().toString().equals(cursor.getString(cursor.getColumnIndex("Answer")))){
+                        if(account.getText().toString().equals(cursor.getString(cursor.getColumnIndex("User")))) {
+                            if (Security.getText().toString().equals(cursor.getString(cursor.getColumnIndex("Security")))) {
+                                if (answer.getText().toString().equals(cursor.getString(cursor.getColumnIndex("Answer")))) {
 
-                                         password.setText(cursor.getString(cursor.getColumnIndex("Passwd")));
+                                    password.setText(cursor.getString(cursor.getColumnIndex("Passwd")));
+                                    Toast.makeText(ForgetActivity.this,"密码查找成功!",Toast.LENGTH_LONG).show();
 
-                                }else{
-                                    Toast.makeText(ForgetActivity.this,"密保答案错误",Toast.LENGTH_LONG).show();
+                                }else
+                                {
+
+                                    Toast.makeText(ForgetActivity.this,"密码查找失败!",Toast.LENGTH_LONG).show();
                                 }
-                            }else{
-                                Toast.makeText(ForgetActivity.this,"密保问题错误",Toast.LENGTH_LONG).show();
                             }
-                        }else{
-                            Toast.makeText(ForgetActivity.this,"账号错误",Toast.LENGTH_LONG).show();
                         }
-
-
                     }while(cursor.moveToNext());
                 }
+
+
+
+
+                }
+
             }
         });
 

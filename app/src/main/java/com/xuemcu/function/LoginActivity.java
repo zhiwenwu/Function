@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static com.xuemcu.function.R.id.email;
 
 /**
  * A login screen that offers login via email/password.
@@ -70,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -119,11 +120,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if(cursor.moveToFirst()){
 
             do {
+
                 String User = cursor.getString(cursor.getColumnIndex("User"));
                 String Passwd = cursor.getString(cursor.getColumnIndex("Passwd"));
                 DUMMY_CREDENTIALS[i] = User+":"+Passwd;
                 Log.d(TAG, "onCreate: 用户名:密码      "+DUMMY_CREDENTIALS[i]);
                 i++;
+
             }while(cursor.moveToNext());
         }
 
@@ -160,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.d(TAG, "onClick: 找回密码点击事件");
                 Intent intent = new Intent(LoginActivity.this,ForgetActivity.class);
                 startActivity(intent);
-                finish();
+              //  finish();
             }
         });
 
@@ -403,8 +406,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 }
                 editor.apply();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("dealerid", mEmail);
+                //注意  得先传递值  然后才能跳转界面  否则值不能被成功的传递过去
                 Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                intent.putExtra("mEmail","123");                      //在这里做一个账号的传递  在主界面里面需要判断是哪个账户登录的!
                 startActivity(intent);
+                Log.d(TAG, "onPostExecute: 传递的账号是:"+mEmail);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

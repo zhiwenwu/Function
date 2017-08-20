@@ -29,7 +29,6 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgetActivity" />
-        <activity android:name=".PersonalActivity"></activity>
     </application>
 
 </manifest>

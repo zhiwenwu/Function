@@ -16,7 +16,7 @@ public class DataBases extends SQLiteOpenHelper {
             + "Passwd text, "       //密码
             + "Security text, "     //密保问题
             + "Answer text, "       //密保答案
-            + "Orders integer, "        //头像
+            + "Orders integer, "    //头像
             + "Nickname text)";     //昵称
     private Context mContext;
 
