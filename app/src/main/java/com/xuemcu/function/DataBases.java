@@ -10,7 +10,7 @@ import android.widget.Toast;
  */
 
 public class DataBases extends SQLiteOpenHelper {
-    public static String CREATE_PASSWORD = "create table Users ("
+    public static String Users = "create table Users ("
             + "ID integer primary key autoincrement, "
             + "User text, "         //账户
             + "Passwd text, "       //密码
@@ -18,6 +18,14 @@ public class DataBases extends SQLiteOpenHelper {
             + "Answer text, "       //密保答案
             + "Orders integer, "    //头像
             + "Nickname text)";     //昵称
+
+    public static String Notes = "create table Notes ("
+            + "ID integer primary key autoincrement, "
+            + "title text,"         //保存的是标题
+            + "context text,"       //保存的是主文
+            + "path text,"          //图片的路径
+            + "time varchar(20))";  //时间
+
     private Context mContext;
 
     public DataBases(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -27,7 +35,8 @@ public class DataBases extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_PASSWORD);
+        db.execSQL(Users);
+        db.execSQL(Notes);
         Toast.makeText(mContext,"Create User Succeeded",Toast.LENGTH_SHORT).show();
     }
 
