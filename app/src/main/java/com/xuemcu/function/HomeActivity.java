@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -17,6 +18,8 @@ import android.widget.TextView;
  */
 public class HomeActivity extends Activity implements View.OnClickListener {
 
+
+    private static final String TAG = "HomeActivity";
     /**
      * 用于展示消息的Fragment
      */
@@ -104,6 +107,15 @@ public class HomeActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        fragmentManager = getFragmentManager();
+//        if (savedInstanceState != null) {
+//            allFrg =  fragmentManager.findFragmentByTag("allFrg");
+//            movieFrg =  fragmentManager.findFragmentByTag("movieFrg");
+//            newsFrg =  fragmentManager.findFragmentByTag("newsFrg");
+//            otherFrg =  fragmentManager.findFragmentByTag("otherFrg");
+//        }
+        //注释这句话 是为了解决重叠问题  不保存Fragment的状态
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
@@ -112,6 +124,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         fragmentManager = getFragmentManager();
         // 第一次启动时选中第0个tab
         setTabSelection(0);
+        Log.d(TAG, "onCreateView: 我好像是小坏蛋!");
     }
 
     /**
@@ -252,6 +265,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
      *            用于对Fragment执行操作的事务
      */
     private void hideFragments(FragmentTransaction transaction) {
+
+        Log.d(TAG, "hideFragments: 我执行了");
         if (messageFragment != null) {
             transaction.hide(messageFragment);
         }

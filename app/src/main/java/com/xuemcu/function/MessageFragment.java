@@ -35,16 +35,13 @@ public class MessageFragment extends Fragment {
 		initListAllPersons();
 		showByMyBaseAdapter();
 
+
 		return messageLayout;
 	}
 
 	public void initListAllPersons(){
 		persons = new ArrayList<Person>();
-		persons.add(new Person("李小龙",R.drawable.qinqin,R.drawable.qinqin,R.drawable.qinqin,"我是爱你的，你们是世界上面最好的"));
-		persons.add(new Person("李小龙",R.drawable.qinqin,R.drawable.qinqin,R.drawable.qinqin,"我是爱你的，你们是世界上面最好的"));
-		persons.add(new Person("李小龙",R.drawable.qinqin,R.drawable.qinqin,R.drawable.qinqin,"我是爱你的，你们是世界上面最好的"));
-		persons.add(new Person("李小龙",R.drawable.qinqin,R.drawable.qinqin,R.drawable.qinqin,"我是爱你的，你们是世界上面最好的"));
-		persons.add(new Person("李小龙",R.drawable.qinqin,R.drawable.qinqin,R.drawable.qinqin,"我是爱你的，你们是世界上面最好的"));
+		persons.clear();
 		persons.add(new Person("李小龙",R.drawable.qinqin,R.drawable.qinqin,R.drawable.qinqin,"我是爱你的，你们是世界上面最好的"));
 		persons.add(new Person("李小龙",R.drawable.qinqin,R.drawable.qinqin,R.drawable.qinqin,"我是爱你的，你们是世界上面最好的"));
 
@@ -53,6 +50,7 @@ public class MessageFragment extends Fragment {
 	public void showByMyBaseAdapter(){
 		adapter = new MyBaseAdapter(getActivity(), persons);
 		listView01.setAdapter(adapter);
+
 	}
 	/**
 	 * 按钮button01Edit的onClick事件.
