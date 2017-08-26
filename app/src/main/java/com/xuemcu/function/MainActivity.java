@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(1500);       //没事做  就休息一会呗。。。。
+                SystemClock.sleep(1500);                //没事做  就休息一会呗。。。。
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();

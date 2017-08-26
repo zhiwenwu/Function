@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,13 +17,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.85"
             android:layout_gravity="center"
-            android:text="账号" />
+            android:text="账号"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/zhang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.15"/>
+            android:layout_weight="0.15"
+            tools:ignore="LabelFor,TextFields" />
 
     </LinearLayout>
 
@@ -38,13 +41,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.85"
             android:text="密保问题"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/ma"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.15"/>
+            android:layout_weight="0.15"
+            tools:ignore="LabelFor,TextFields" />
 
     </LinearLayout>
 
@@ -60,13 +65,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.85"
             android:layout_gravity="center"
-            android:text="密保答案" />
+            android:text="密保答案"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/da"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.15"/>
+            android:layout_weight="0.15"
+            tools:ignore="LabelFor,TextFields" />
 
     </LinearLayout>
 
@@ -80,14 +87,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.85"
             android:layout_gravity="center"
-            android:text="密码" />
+            android:text="密码"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/mima"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.15" />
+            android:layout_weight="0.15"
+            android:textSize="35dp"/>
 
     </LinearLayout>
 
@@ -103,7 +112,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="找回密码"
-            android:background="#00FFFF"/>
+            android:background="#00FFFF"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
