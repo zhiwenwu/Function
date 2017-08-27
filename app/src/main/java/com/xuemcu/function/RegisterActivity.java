@@ -89,6 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                             values.put("Security", Registe_mima.getText().toString());
                             values.put("Answer", Registe_daan.getText().toString());
                             values.put("Orders", 1);
+                            values.put("Sex", "男");
                             values.put("Nickname", Registe_order.getText().toString());
 
                             db.insert("Users",null,values);

@@ -47,6 +47,7 @@ class MyBaseAdapter extends BaseAdapter {
 //        TextView textViewItem02;
 //        TextView textViewItem03;
 //        ImageView imageView;
+        ImageView portrait;
         TextView Name;
         ImageView picture1;
         ImageView picture2;
@@ -69,7 +70,7 @@ class MyBaseAdapter extends BaseAdapter {
             viewHolder.picture1 = (ImageView)convertView.findViewById(R.id.picture1);
             viewHolder.picture2 = (ImageView)convertView.findViewById(R.id.picture2);
             viewHolder.picture3 = (ImageView)convertView.findViewById(R.id.picture3);
-
+            viewHolder.portrait = (ImageView) convertView.findViewById(R.id.portrait);
 
 
 //            viewHolder = new ViewHolder();
@@ -122,7 +123,7 @@ class MyBaseAdapter extends BaseAdapter {
         }
 
 
-
+        viewHolder.portrait.setImageResource(person.portrait);
         viewHolder.Name.setText(person.name);
         viewHolder.picture1.setImageResource(person.photo1);
         viewHolder.picture2.setImageResource(person.photo2);

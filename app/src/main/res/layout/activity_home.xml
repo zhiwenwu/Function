@@ -13,34 +13,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="@drawable/tab_1" >
+        android:background="@drawable/tab_1">
 
         <RelativeLayout
             android:id="@+id/message_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/message_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/message_unselected" />
+                    android:src="@drawable/shouye1" />
 
-                <TextView
-                    android:id="@+id/message_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="首页"
-                    android:textColor="#82858b" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -48,28 +41,22 @@
             android:id="@+id/contacts_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/contacts_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/contacts_unselected" />
+                    android:src="@drawable/youji1" />
 
-                <TextView
-                    android:id="@+id/contacts_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="游记"
-                    android:textColor="#82858b" />
+
             </LinearLayout>
         </RelativeLayout>
 
@@ -77,28 +64,21 @@
             android:id="@+id/news_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/news_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/news_unselected" />
+                    android:src="@drawable/dingzhi1" />
 
-                <TextView
-                    android:id="@+id/news_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="私人订制"
-                    android:textColor="#82858b" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -106,28 +86,22 @@
             android:id="@+id/setting_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/setting_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/setting_unselected" />
+                    android:src="@drawable/shezhi1" />
 
-                <TextView
-                    android:id="@+id/setting_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="我"
-                    android:textColor="#82858b" />
+
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

@@ -11,13 +11,11 @@
         >
 
 
-
         <EditText
             android:id="@+id/biao"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="标题"
-            />
+            android:hint="标题" />
 
     </LinearLayout>
     <LinearLayout
@@ -38,7 +36,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         >
 
         <Button
@@ -46,23 +44,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="添加照片"
-            android:background="#00FFFF"/>
+            android:layout_weight="0.5"
+            android:text="添加照片" />
 
         <Button
             android:id="@+id/Sava"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="保存"
-            android:background="#00FFFF"/>
-        <Button
-            android:id="@+id/du"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="取出"
-            android:background="#00FFFF"/>
+            android:layout_weight="0.5"
+            android:text="保存" />
 
     </LinearLayout>
 

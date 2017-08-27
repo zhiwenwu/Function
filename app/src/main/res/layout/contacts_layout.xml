@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="游记中心"
+        android:textSize="45dp"
+        android:textColor="#852546"
+        android:gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -4,7 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:text="首页"
+    android:textSize="45dp"
+    android:textColor="#90EE90"
+    android:gravity="center"
+    android:background="@drawable/tab_1"/>
     <ListView
         android:id="@+id/listView01"
         android:layout_width="fill_parent"

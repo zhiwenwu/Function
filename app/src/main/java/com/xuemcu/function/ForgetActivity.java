@@ -65,28 +65,24 @@ public class ForgetActivity extends AppCompatActivity {
                 }
                 else{
 
-                if(cursor.moveToFirst()){
-                    do {
-                        if(account.getText().toString().equals(cursor.getString(cursor.getColumnIndex("User")))) {
-                            if (Security.getText().toString().equals(cursor.getString(cursor.getColumnIndex("Security")))) {
-                                if (answer.getText().toString().equals(cursor.getString(cursor.getColumnIndex("Answer")))) {
+                        if(cursor.moveToFirst()){
+                            do {
+                                if(account.getText().toString().equals(cursor.getString(cursor.getColumnIndex("User")))) {
+                                    if (Security.getText().toString().equals(cursor.getString(cursor.getColumnIndex("Security")))) {
+                                        if (answer.getText().toString().equals(cursor.getString(cursor.getColumnIndex("Answer")))) {
 
-                                    password.setText(cursor.getString(cursor.getColumnIndex("Passwd")));
-                                    Toast.makeText(ForgetActivity.this,"密码查找成功!",Toast.LENGTH_LONG).show();
+                                            password.setText(cursor.getString(cursor.getColumnIndex("Passwd")));
+                                            Toast.makeText(ForgetActivity.this,"密码查找成功!",Toast.LENGTH_LONG).show();
 
-                                }else
-                                {
+                                        }else
+                                        {
 
-                                    Toast.makeText(ForgetActivity.this,"密码查找失败!",Toast.LENGTH_LONG).show();
+                                            Toast.makeText(ForgetActivity.this,"密码查找失败!",Toast.LENGTH_LONG).show();
+                                        }
+                                    }
                                 }
-                            }
+                            }while(cursor.moveToNext());
                         }
-                    }while(cursor.moveToNext());
-                }
-
-
-
-
                 }
 
             }

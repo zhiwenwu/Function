@@ -37,14 +37,12 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
     private EditText biao;
     private EditText et_Notes;
     private Button Sava;
-    private Button du;
     private List<String> list;
 
     private String Path = "####";
 
     private DataBases dataBases;  //数据库
     GetPathFromUri4kitkat Get;
-    private SQLiteDatabase db;
     // 要申请的权限
     private String[] permissions = {Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -63,9 +61,6 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
         tu.setOnClickListener(this);
         Sava = (Button) findViewById(R.id.Sava);
         Sava.setOnClickListener(this);
-        du = (Button) findViewById(R.id.du);
-
-        du.setOnClickListener(this);
 
         //定义个路径地址保存集合
         list = new ArrayList<>();
@@ -99,7 +94,7 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
                 //设定类型为image
                 intent.setType("image/*");
                 //设置action
-                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                intent.setAction(Intent.ACTION_PICK);
                 //选中相片后返回本Activity
                 startActivityForResult(intent, 1);
                 break;

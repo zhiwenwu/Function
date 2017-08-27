@@ -21,18 +21,16 @@
         tools:ignore="InefficientWeight">
 
 
-
-
         <TextView
             android:id="@+id/display_dialog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="正文"
+            android:maxLines="150"
+            android:scrollbars="vertical"
             android:textColor="#000000"
             android:textSize="15dp"
-            tools:ignore="HardcodedText,SpUsage"
-            android:maxLines = "150"
-            android:scrollbars = "vertical"
-            android:hint="正文"/>
+            tools:ignore="HardcodedText,SpUsage" />
 
     </LinearLayout>
 

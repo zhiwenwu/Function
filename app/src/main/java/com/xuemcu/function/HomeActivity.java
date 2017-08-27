@@ -3,11 +3,10 @@ package com.xuemcu.function;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +17,7 @@ import android.widget.TextView;
  */
 public class HomeActivity extends Activity implements View.OnClickListener {
 
-
+    public static String AccountNumber="";
     private static final String TAG = "HomeActivity";
     /**
      * 用于展示消息的Fragment
@@ -105,6 +104,12 @@ public class HomeActivity extends Activity implements View.OnClickListener {
      */
     private FragmentManager fragmentManager;
 
+
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Log.d(TAG, "onBackPressed!");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -117,7 +122,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
 //        }
         //注释这句话 是为了解决重叠问题  不保存Fragment的状态
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+       // requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
         // 初始化布局元素
         initViews();
@@ -139,14 +144,20 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         contactsImage = (ImageView) findViewById(R.id.contacts_image);
         newsImage = (ImageView) findViewById(R.id.news_image);
         settingImage = (ImageView) findViewById(R.id.setting_image);
-        messageText = (TextView) findViewById(R.id.message_text);
-        contactsText = (TextView) findViewById(R.id.contacts_text);
-        newsText = (TextView) findViewById(R.id.news_text);
-        settingText = (TextView) findViewById(R.id.setting_text);
+//        messageText = (TextView) findViewById(R.id.message_text);
+//        contactsText = (TextView) findViewById(R.id.contacts_text);
+//        newsText = (TextView) findViewById(R.id.news_text);
+//        settingText = (TextView) findViewById(R.id.setting_text);
         messageLayout.setOnClickListener(this);
         contactsLayout.setOnClickListener(this);
         newsLayout.setOnClickListener(this);
         settingLayout.setOnClickListener(this);
+
+
+        Intent intent = getIntent();
+        String string = intent.getStringExtra("mEmail");
+        AccountNumber = string;
+        Log.d(TAG, "initViews:    接收到的账号是:"+string);
     }
 
     @Override
@@ -189,8 +200,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         switch (index) {
             case 0:
                 // 当点击了消息tab时，改变控件的图片和文字颜色
-                messageImage.setImageResource(R.drawable.message_selected);
-                messageText.setTextColor(Color.WHITE);
+                messageImage.setImageResource(R.drawable.shouye2);
+                //messageText.setTextColor(Color.WHITE);
                 if (messageFragment == null) {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     messageFragment = new MessageFragment();
@@ -202,8 +213,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 break;
             case 1:
                 // 当点击了联系人tab时，改变控件的图片和文字颜色
-                contactsImage.setImageResource(R.drawable.contacts_selected);
-                contactsText.setTextColor(Color.WHITE);
+                contactsImage.setImageResource(R.drawable.youji2);
+                //contactsText.setTextColor(Color.WHITE);
                 if (contactsFragment == null) {
                     // 如果ContactsFragment为空，则创建一个并添加到界面上
                     contactsFragment = new ContactsFragment();
@@ -215,8 +226,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 break;
             case 2:
                 // 当点击了动态tab时，改变控件的图片和文字颜色
-                newsImage.setImageResource(R.drawable.news_selected);
-                newsText.setTextColor(Color.WHITE);
+                newsImage.setImageResource(R.drawable.dingzhi2);
+               // newsText.setTextColor(Color.WHITE);
                 if (newsFragment == null) {
                     // 如果NewsFragment为空，则创建一个并添加到界面上
                     newsFragment = new NewsFragment();
@@ -229,8 +240,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
             case 3:
             default:
                 // 当点击了设置tab时，改变控件的图片和文字颜色
-                settingImage.setImageResource(R.drawable.setting_selected);
-                settingText.setTextColor(Color.WHITE);
+                settingImage.setImageResource(R.drawable.shezhi2);
+                //settingText.setTextColor(Color.WHITE);
                 if (settingFragment == null) {
                     // 如果SettingFragment为空，则创建一个并添加到界面上
                     settingFragment = new SettingFragment();
@@ -248,14 +259,14 @@ public class HomeActivity extends Activity implements View.OnClickListener {
      * 清除掉所有的选中状态。
      */
     private void clearSelection() {
-        messageImage.setImageResource(R.drawable.message_unselected);
-        messageText.setTextColor(Color.parseColor("#82858b"));
-        contactsImage.setImageResource(R.drawable.contacts_unselected);
-        contactsText.setTextColor(Color.parseColor("#82858b"));
-        newsImage.setImageResource(R.drawable.news_unselected);
-        newsText.setTextColor(Color.parseColor("#82858b"));
-        settingImage.setImageResource(R.drawable.setting_unselected);
-        settingText.setTextColor(Color.parseColor("#82858b"));
+        messageImage.setImageResource(R.drawable.shouye1);
+        //messageText.setTextColor(Color.parseColor("#82858b"));
+        contactsImage.setImageResource(R.drawable.youji1);
+        //contactsText.setTextColor(Color.parseColor("#82858b"));
+        newsImage.setImageResource(R.drawable.dingzhi1);
+        //newsText.setTextColor(Color.parseColor("#82858b"));
+        settingImage.setImageResource(R.drawable.shezhi1);
+        //settingText.setTextColor(Color.parseColor("#82858b"));
     }
 
     /**

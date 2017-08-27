@@ -2,16 +2,60 @@ package com.xuemcu.function;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import static com.xuemcu.function.HomeActivity.AccountNumber;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
 	private static final String TAG = "SettingFragment";
+	ImageView iv_avatar = null;
+	TextView tv_name = null;
+	TextView tv_fxid = null;
+
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+
+		DataBases dataBases = new DataBases(getActivity(),"DataBase.db",null,1);
+
+		SQLiteDatabase db = dataBases.getWritableDatabase();
+
+		Cursor cursor = db.query("Users",null,null,null,null,null,null);
+
+		if(cursor.moveToFirst()){
+			do {
+				if(AccountNumber.equals(cursor.getString(cursor.getColumnIndex("User")))){
+					tv_name.setText(cursor.getString(cursor.getColumnIndex("Nickname")));
+					tv_fxid.setText("账号:"+AccountNumber);
+					String Photo = cursor.getString(cursor.getColumnIndex("Orders"));
+					switch (Photo){
+
+						case "1":
+							iv_avatar.setImageResource(R.drawable.photo1);
+							break;
+						case "2":
+							iv_avatar.setImageResource(R.drawable.photo2);
+							break;
+						case "3":
+							iv_avatar.setImageResource(R.drawable.photo3);
+							break;
+
+					}
+				}
+			}while(cursor.moveToNext());
+		}
+
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,8 +79,54 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 				R.id.re_setting);
 		re_setting.setOnClickListener(this);
 
+		iv_avatar = (ImageView) settingLayout.findViewById(R.id.iv_avatar);
+		tv_name = (TextView) settingLayout.findViewById(R.id.tv_name);
+		tv_fxid = (TextView) settingLayout.findViewById(R.id.tv_fxid);
+
+
+
+		DataBases dataBases = new DataBases(getActivity(),"DataBase.db",null,1);
+
+		SQLiteDatabase db = dataBases.getWritableDatabase();
+
+		Cursor cursor = db.query("Users",null,null,null,null,null,null);
+
+		if(cursor.moveToFirst()){
+			do {
+				if(AccountNumber.equals(cursor.getString(cursor.getColumnIndex("User")))){
+
+					tv_name.setText(cursor.getString(cursor.getColumnIndex("Nickname")));
+					tv_fxid.setText("账号:"+AccountNumber);
+					String Photo = cursor.getString(cursor.getColumnIndex("Orders"));
+					switch (Photo){
+
+						case "1":
+							iv_avatar.setImageResource(R.drawable.photo1);
+							break;
+						case "2":
+							iv_avatar.setImageResource(R.drawable.photo2);
+							break;
+						case "3":
+							iv_avatar.setImageResource(R.drawable.photo3);
+							break;
+
+					}
+
+//					NickName = cursor.getString(cursor.getColumnIndex("Nickname"));
+//					Photo = cursor.getString(cursor.getColumnIndex("Orders"));
+
+					//Log.d(TAG, "InitView: "+sex+NickName+Photo);
+
+				}
+			}while(cursor.moveToNext());
+		}
+
+
+
 		return settingLayout;
 	}
+
+
 
 	@Override
 	public void onClick(View view) {

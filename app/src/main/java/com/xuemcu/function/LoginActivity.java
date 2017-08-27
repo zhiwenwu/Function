@@ -410,7 +410,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                bundle.putString("dealerid", mEmail);
                 //注意  得先传递值  然后才能跳转界面  否则值不能被成功的传递过去
                 Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                intent.putExtra("mEmail","123");                      //在这里做一个账号的传递  在主界面里面需要判断是哪个账户登录的!
+                intent.putExtra("mEmail",mEmail);                      //在这里做一个账号的传递  在主界面里面需要判断是哪个账户登录的!
                 startActivity(intent);
                 Log.d(TAG, "onPostExecute: 传递的账号是:"+mEmail);
                 finish();
