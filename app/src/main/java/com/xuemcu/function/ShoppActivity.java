@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CollectActivity extends AppCompatActivity {
+public class ShoppActivity extends AppCompatActivity {
 
 
     private static final String TAG = "CollectActivity";
@@ -29,7 +29,7 @@ public class CollectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collect);
+        setContentView(R.layout.activity_shopp);
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +41,7 @@ public class CollectActivity extends AppCompatActivity {
 
 
         list = (ListView) findViewById(R.id.list_look);
-        list.setAdapter(new ArrayAdapter<String>(CollectActivity.this, android.R.layout.simple_list_item_1,getData()));
+        list.setAdapter(new ArrayAdapter<String>(ShoppActivity.this, android.R.layout.simple_list_item_1,getData()));
         list.setTextFilterEnabled(true);
 
 
@@ -51,7 +51,7 @@ public class CollectActivity extends AppCompatActivity {
 
                 //加载数据   然后传递参数  进入查看详情界面
 
-                Intent intent = new Intent(CollectActivity.this,LookCollectActivity.class);
+                Intent intent = new Intent(ShoppActivity.this,LookShoppActivity.class);
                 intent.putExtra("name",data.get(i).toString());
                 startActivity(intent);
 
@@ -64,7 +64,7 @@ public class CollectActivity extends AppCompatActivity {
 
     private List<String> getData(){
 
-        dataBases = new DataBases(CollectActivity.this,"DataBase.db",null,1);
+        dataBases = new DataBases(ShoppActivity.this,"DataBase.db",null,1);
         SQLiteDatabase db = dataBases.getWritableDatabase();
         Cursor cursorNu = db.query("Login",null,null,null,null,null,null);
 
@@ -78,7 +78,7 @@ public class CollectActivity extends AppCompatActivity {
                 }
             }while(cursorNu.moveToNext());
         }
-        Cursor cursor = db.query("Collects",null,null,null,null,null,null);
+        Cursor cursor = db.query("Shopps",null,null,null,null,null,null);
 
 
         if(cursor.moveToFirst()){
@@ -101,3 +101,4 @@ public class CollectActivity extends AppCompatActivity {
 
 
 }
+

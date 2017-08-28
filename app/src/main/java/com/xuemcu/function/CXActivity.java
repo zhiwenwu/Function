@@ -131,6 +131,7 @@ public class CXActivity extends Activity implements View.OnClickListener{
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.Dingzhis:
+                Shopps();
                 Toast.makeText(this, "订制", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -349,6 +350,54 @@ public class CXActivity extends Activity implements View.OnClickListener{
         values.clear();
 
         Cursor cursor = db.query("Collects",null,null,null,null,null,null);
+
+        if(cursor.moveToFirst()){
+            do {
+
+                Log.d(TAG, "Collect: "+cursor.getString(cursor.getColumnIndex("User")));
+                Log.d(TAG, "Collect: "+cursor.getString(cursor.getColumnIndex("name")));
+                Log.d(TAG, "Collect: "+cursor.getString(cursor.getColumnIndex("number")));
+                Log.d(TAG, "Collect: "+cursor.getString(cursor.getColumnIndex("picture")));
+                Log.d(TAG, "Collect: "+cursor.getString(cursor.getColumnIndex("introduce")));
+                Log.d(TAG, "Collect: "+cursor.getString(cursor.getColumnIndex("expenses")));
+                Log.d(TAG, "Collect: "+cursor.getString(cursor.getColumnIndex("explain")));
+
+
+            }while(cursor.moveToNext());
+        }
+
+    }
+
+    private void Shopps(){
+
+        dataBases = new DataBases(CXActivity.this,"DataBase.db",null,1);
+        SQLiteDatabase db = dataBases.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        Cursor cursorNu = db.query("Login",null,null,null,null,null,null);
+
+        if(cursorNu.moveToFirst()){
+            do {
+                if(logins.equals(cursorNu.getString(cursorNu.getColumnIndex("logins")))){
+
+                    AccountNumber = cursorNu.getString(cursorNu.getColumnIndex("login"));
+                    Log.d(TAG, "AccountNumber: "+AccountNumber);
+
+                }
+            }while(cursorNu.moveToNext());
+        }
+
+        values.put("User",AccountNumber);
+        values.put("name",name[Num]);
+        values.put("number", Indexs);
+        values.put("picture", Indexs);
+        values.put("introduce", jieshao[Num]);
+        values.put("expenses", feiyong[Num]);
+        values.put("explain", shiyong[Num]);
+
+        db.insert("Shopps",null,values);
+        values.clear();
+
+        Cursor cursor = db.query("Shopps",null,null,null,null,null,null);
 
         if(cursor.moveToFirst()){
             do {

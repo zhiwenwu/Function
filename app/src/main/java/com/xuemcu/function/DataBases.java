@@ -42,6 +42,16 @@ public class DataBases extends SQLiteOpenHelper {
             + "expenses text,"
             + "explain text)";
 
+    public static String Shopps = "create table Shopps (" //记录账号的收藏
+            + "ID integer primary key autoincrement, "
+            + "User text,"
+            + "name text,"
+            + "number text,"
+            + "picture text,"
+            + "introduce text,"
+            + "expenses text,"
+            + "explain text)";
+
 //    public static String InforMation = "create table InforMation ("
 //            + "ID integer primary key autoincrement, "
 //            + "title text,"         //保存的是标题
@@ -63,6 +73,7 @@ public class DataBases extends SQLiteOpenHelper {
         db.execSQL(Notes);
         db.execSQL(Login);
         db.execSQL(Collects);
+        db.execSQL(Shopps);
         Toast.makeText(mContext,"Create User Succeeded",Toast.LENGTH_SHORT).show();
     }
 
