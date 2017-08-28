@@ -155,7 +155,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 				Log.d(TAG, "onClick:       个人信息设置");
 				break;
 			case R.id.re_xiangce:
+
 				Log.d(TAG, "onClick:       购物车");
+				Intent Shopp_intent = new Intent(getActivity(),ShoppActivity.class);
+				startActivity(Shopp_intent);
 				break;
 			case R.id.re_shoucang:
 				Log.d(TAG, "onClick:       查看收藏");
