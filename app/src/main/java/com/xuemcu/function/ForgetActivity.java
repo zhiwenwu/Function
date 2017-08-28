@@ -47,7 +47,8 @@ public class ForgetActivity extends AppCompatActivity {
 
                 SQLiteDatabase db = dataBases.getWritableDatabase();
 
-                Cursor cursor = db.query("Users",null,null,null,null,null,null);
+                Cursor cursor = db.query("Login",null,null,null,null,null,null);
+
 
 
                 if(account.getText().toString().equals(""))

@@ -44,6 +44,7 @@ public  class NewsFragment extends Fragment implements View.OnClickListener {
 	ListAdapter adapter_zijia = null;
 
 	private int indexs = 0;
+	private String String = "";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,8 +78,33 @@ public  class NewsFragment extends Fragment implements View.OnClickListener {
 								Toast.makeText(getActivity(),
 						"[OnItemClickListener]点击了："+persons.get(position).name,
 						Toast.LENGTH_SHORT).show();
+				position = position + 1;
 				Intent intent = new Intent(getActivity(),CXActivity.class);
+				if(persons.size() == 4)
+				{
+					indexs = position;
+					Log.d(TAG, "position: "+position);
+
+				}else if(persons.size() == 2)
+				{
+					indexs = position+4;
+
+				}else if(persons.size() == 3){
+
+					indexs = position+4+2;
+
+				}
+
+				String = String.valueOf(indexs);
+				Bundle bundle = new Bundle();
+				bundle.putString("Indexs",String);
+				intent.putExtras(bundle);
 				startActivity(intent);
+
+
+//				intent.putExtra("Indexs",indexs);
+//				Log.d(TAG, "onItemClick: Indexs   " +indexs);
+//				getActivity().startActivity(intent);
 			}
 		});
 
@@ -188,6 +214,7 @@ public  class NewsFragment extends Fragment implements View.OnClickListener {
 	public void initListAllPersons_zijia(){
 		persons_zijia = new ArrayList<Person>();
 		//persons.clear();
+		persons.add(new Person(R.drawable.meitu_3,"我一直都在丶不曾离开",R.drawable.timg7,R.drawable.timg8,R.drawable.timg9,"旅行，其实是需要具有一些流浪精神的，这种精神使人能在旅行中和大自然更加接近，悠然享受和大自然融合之乐。旅行，有一种苍凉，“浮云游子意，落日故人情”，孑然一身，隐入苍茫自然，自有一种孤独的意味；旅行，更有一种逍遥，浑然忘我，与大自然交融的境界令人心弛神往。"));
 		persons_zijia.add(new Person(R.drawable.meitu_7,"世界这么大丶我想去看看",R.drawable.timg7,R.drawable.timg8,R.drawable.timg9,"旅行，其实是需要具有一些流浪精神的，这种精神使人能在旅行中和大自然更加接近，悠然享受和大自然融合之乐。旅行，有一种苍凉，“浮云游子意，落日故人情”，孑然一身，隐入苍茫自然，自有一种孤独的意味；旅行，更有一种逍遥，浑然忘我，与大自然交融的境界令人心弛神往。"));
 		persons_zijia.add(new Person(R.drawable.meitu_8,"我带着你丶你带着钱",R.drawable.timg1,R.drawable.timg2,R.drawable.timg3,"有的旅行是为了拓宽眼界，浏览风景名胜。有的旅行是为了体验生活，感悟人生。有的旅行时为了寻找逝去的年华，重温青春的惆怅。而有的旅行是释放负面情绪，换个心情，轻装上阵。"));
 

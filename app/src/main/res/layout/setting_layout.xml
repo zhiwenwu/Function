@@ -141,23 +141,23 @@
         android:paddingLeft="12dp"
         tools:ignore="RtlSymmetry">
 
-        <ImageView
-            android:id="@+id/iv_setting"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/akf" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_setting"
-            android:text="退出登录"
-            android:textColor="#353535"
-            android:textSize="16sp" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:text="退出登录"
+        android:gravity="center"
+        android:textColor="#00CD00"
+        android:textSize="20sp" />
+
+</LinearLayout>
     </RelativeLayout>
 </LinearLayout>

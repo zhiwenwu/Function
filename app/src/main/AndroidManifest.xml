@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,6 +35,8 @@
         <activity android:name=".XinActivity" />
         <activity android:name=".MyUserInfoActivity" />
         <activity android:name=".CXActivity" />
+        <activity android:name=".LookCollectActivity" />
+        <activity android:name=".CollectActivity"></activity>
     </application>
 
 </manifest>

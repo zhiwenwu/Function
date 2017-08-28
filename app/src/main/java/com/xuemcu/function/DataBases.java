@@ -32,11 +32,15 @@ public class DataBases extends SQLiteOpenHelper {
             + "logins text,"
             + "login text)";  //记录当前登录账号
 
-    public static String Shopp = "create table Shopp ("
+    public static String Collects = "create table Collects (" //记录账号的收藏
             + "ID integer primary key autoincrement, "
             + "User text,"
-            + "Collect text,"   //记录账号的收藏
-            + "Shopp text)";  //记录账号的私人订制
+            + "name text,"
+            + "number text,"
+            + "picture text,"
+            + "introduce text,"
+            + "expenses text,"
+            + "explain text)";
 
 //    public static String InforMation = "create table InforMation ("
 //            + "ID integer primary key autoincrement, "
@@ -58,6 +62,7 @@ public class DataBases extends SQLiteOpenHelper {
         db.execSQL(Users);
         db.execSQL(Notes);
         db.execSQL(Login);
+        db.execSQL(Collects);
         Toast.makeText(mContext,"Create User Succeeded",Toast.LENGTH_SHORT).show();
     }
 

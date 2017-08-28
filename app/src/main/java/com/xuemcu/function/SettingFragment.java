@@ -159,6 +159,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 				break;
 			case R.id.re_shoucang:
 				Log.d(TAG, "onClick:       查看收藏");
+				Intent Collect_intent = new Intent(getActivity(),CollectActivity.class);
+				startActivity(Collect_intent);
 				break;
 			case R.id.re_setting:
 				Log.d(TAG, "onClick:       退出登录");
