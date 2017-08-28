@@ -3,12 +3,14 @@ package com.xuemcu.function;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * 项目的主Activity，所有的Fragment都嵌入在这里。
@@ -17,93 +19,22 @@ import android.widget.TextView;
  */
 public class HomeActivity extends Activity implements View.OnClickListener {
 
-    public static String AccountNumber="";
+
+    public static String AccountNumber;
     private static final String TAG = "HomeActivity";
-    /**
-     * 用于展示消息的Fragment
-     */
     private MessageFragment messageFragment;
-
-    /**
-     * 用于展示联系人的Fragment
-     */
     private ContactsFragment contactsFragment;
-
-    /**
-     * 用于展示动态的Fragment
-     */
     private NewsFragment newsFragment;
-
-    /**
-     * 用于展示设置的Fragment
-     */
     private SettingFragment settingFragment;
-
-    /**
-     * 消息界面布局
-     */
     private View messageLayout;
-
-    /**
-     * 联系人界面布局
-     */
     private View contactsLayout;
-
-    /**
-     * 动态界面布局
-     */
     private View newsLayout;
-
-    /**
-     * 设置界面布局
-     */
     private View settingLayout;
-
-    /**
-     * 在Tab布局上显示消息图标的控件
-     */
     private ImageView messageImage;
-
-    /**
-     * 在Tab布局上显示联系人图标的控件
-     */
     private ImageView contactsImage;
-
-    /**
-     * 在Tab布局上显示动态图标的控件
-     */
     private ImageView newsImage;
-
-    /**
-     * 在Tab布局上显示设置图标的控件
-     */
     private ImageView settingImage;
-
-    /**
-     * 在Tab布局上显示消息标题的控件
-     */
-    private TextView messageText;
-
-    /**
-     * 在Tab布局上显示联系人标题的控件
-     */
-    private TextView contactsText;
-
-    /**
-     * 在Tab布局上显示动态标题的控件
-     */
-    private TextView newsText;
-
-    /**
-     * 在Tab布局上显示设置标题的控件
-     */
-    private TextView settingText;
-
-    /**
-     * 用于对Fragment进行管理
-     */
     private FragmentManager fragmentManager;
-
 
     public void onBackPressed() {
         //super.onBackPressed();
@@ -130,11 +61,11 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         // 第一次启动时选中第0个tab
         setTabSelection(0);
         Log.d(TAG, "onCreateView: 我好像是小坏蛋!");
+
+
+
     }
 
-    /**
-     * 在这里获取到每个需要用到的控件的实例，并给它们设置好必要的点击事件。
-     */
     private void initViews() {
         messageLayout = findViewById(R.id.message_layout);
         contactsLayout = findViewById(R.id.contacts_layout);
@@ -157,6 +88,40 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         Intent intent = getIntent();
         String string = intent.getStringExtra("mEmail");
         AccountNumber = string;
+
+        DataBases dataBases = new DataBases(HomeActivity.this,"DataBase.db",null,1);
+
+        SQLiteDatabase db = dataBases.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        Cursor cursor2=db.rawQuery("select * from Login",null);
+
+        if(cursor2.getCount()==0)
+        {
+            values.put("logins","123");
+            values.put("login",AccountNumber);
+            db.insert("Login",null,values);
+            values.clear();
+            Log.d(TAG, "initViews: 插入数据");
+            //执行插入语句
+        }else {
+
+            values.put("login",AccountNumber);
+            db.update("Login",values,"logins = ?",new String[]{"123"});
+        }
+        Cursor cursor = db.query("Login",null,null,null,null,null,null);
+        if(cursor.moveToFirst()) {
+            do {
+
+                String string1 = cursor.getString(cursor.getColumnIndex("login"));
+
+                Log.d(TAG, "现在的数据是: " + string1);
+
+            } while (cursor.moveToNext());
+        }
+
+
         Log.d(TAG, "initViews:    接收到的账号是:"+string);
     }
 
@@ -164,19 +129,19 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.message_layout:
-                // 当点击了消息tab时，选中第1个tab
+                // 当点击时，选中第1个tab
                 setTabSelection(0);
                 break;
             case R.id.contacts_layout:
-                // 当点击了联系人tab时，选中第2个tab
+                // 当点击时，选中第2个tab
                 setTabSelection(1);
                 break;
             case R.id.news_layout:
-                // 当点击了动态tab时，选中第3个tab
+                // 当点击时，选中第3个tab
                 setTabSelection(2);
                 break;
             case R.id.setting_layout:
-                // 当点击了设置tab时，选中第4个tab
+                // 当点击时，选中第4个tab
                 setTabSelection(3);
                 break;
             default:
@@ -184,12 +149,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    /**
-     * 根据传入的index参数来设置选中的tab页。
-     *
-     * @param index
-     *            每个tab页对应的下标。0表示消息，1表示联系人，2表示动态，3表示设置。
-     */
     private void setTabSelection(int index) {
         // 每次选中之前先清楚掉上次的选中状态
         clearSelection();
@@ -199,7 +158,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         hideFragments(transaction);
         switch (index) {
             case 0:
-                // 当点击了消息tab时，改变控件的图片和文字颜色
+                // 当点击时，改变控件的图片和文字颜色
                 messageImage.setImageResource(R.drawable.shouye2);
                 //messageText.setTextColor(Color.WHITE);
                 if (messageFragment == null) {
@@ -212,7 +171,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case 1:
-                // 当点击了联系人tab时，改变控件的图片和文字颜色
+                // 当点击时，改变控件的图片和文字颜色
                 contactsImage.setImageResource(R.drawable.youji2);
                 //contactsText.setTextColor(Color.WHITE);
                 if (contactsFragment == null) {
@@ -225,7 +184,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case 2:
-                // 当点击了动态tab时，改变控件的图片和文字颜色
+                // 当点击时，改变控件的图片和文字颜色
                 newsImage.setImageResource(R.drawable.dingzhi2);
                // newsText.setTextColor(Color.WHITE);
                 if (newsFragment == null) {
@@ -239,7 +198,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 break;
             case 3:
             default:
-                // 当点击了设置tab时，改变控件的图片和文字颜色
+                // 当点击时，改变控件的图片和文字颜色
                 settingImage.setImageResource(R.drawable.shezhi2);
                 //settingText.setTextColor(Color.WHITE);
                 if (settingFragment == null) {
@@ -255,9 +214,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         transaction.commit();
     }
 
-    /**
-     * 清除掉所有的选中状态。
-     */
     private void clearSelection() {
         messageImage.setImageResource(R.drawable.shouye1);
         //messageText.setTextColor(Color.parseColor("#82858b"));
@@ -269,12 +225,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         //settingText.setTextColor(Color.parseColor("#82858b"));
     }
 
-    /**
-     * 将所有的Fragment都置为隐藏状态。
-     *
-     * @param transaction
-     *            用于对Fragment执行操作的事务
-     */
     private void hideFragments(FragmentTransaction transaction) {
 
         Log.d(TAG, "hideFragments: 我执行了");

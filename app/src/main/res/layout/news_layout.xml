@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="35dp">
 
         <RelativeLayout
             android:id="@+id/message_layout"
@@ -26,7 +26,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="亲子游"
-                    android:textColor="#82858b" />
+                    android:textColor="#82858b"
+                    android:textSize="20dp"/>
             </LinearLayout>
         </RelativeLayout>
 
@@ -48,7 +49,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="蜜月游"
-                    android:textColor="#82858b" />
+                    android:textColor="#82858b"
+                    android:textSize="20dp"/>
             </LinearLayout>
         </RelativeLayout>
 
@@ -70,17 +72,108 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="摄影游"
-                    android:textColor="#82858b" />
+                    android:textColor="#82858b"
+                    android:textSize="20dp"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-    </FrameLayout>
+<ListView
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></ListView>
 
 
 </LinearLayout>
+
+
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical" >-->
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="35dp">-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/message_layout"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/message_text"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:text="亲子游"-->
+                    <!--android:textColor="#82858b"-->
+                    <!--android:textSize="20dp"/>-->
+            <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/contacts_layout"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/contacts_text"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:text="蜜月游"-->
+                    <!--android:textColor="#82858b"-->
+                    <!--android:textSize="20dp"/>-->
+            <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/setting_layout"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/setting_text"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:text="摄影游"-->
+                    <!--android:textColor="#82858b"-->
+                    <!--android:textSize="20dp"/>-->
+            <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1" >-->
+    <!--</FrameLayout>-->
+
+
+<!--</LinearLayout>-->

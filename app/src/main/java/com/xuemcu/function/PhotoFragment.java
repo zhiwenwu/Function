@@ -16,12 +16,13 @@ import java.util.List;
 
 
 /**
- * Created by Wuzhiwen on 2017/8/26.
+ * Created by Wuzhiwen on 2017/8/28.
  */
 
-public class HomeFrsgment extends Fragment{
 
-    private View homelayot;
+public class PhotoFragment extends Fragment {
+
+    private View photolayout;
     private int index;
     private ListView list;
     //定义Person
@@ -30,18 +31,18 @@ public class HomeFrsgment extends Fragment{
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        homelayot = inflater.inflate(R.layout.home_layout,
+        photolayout = inflater.inflate(R.layout.photo_layout,
                 container, false);
 
         InitViews();
         initListAllPersons();
         showByMyBaseAdapter();
-        return homelayot ;
+        return photolayout ;
     }
 
     private void InitViews(){
 
-        list = (ListView) homelayot.findViewById(R.id.list);
+        list = (ListView) photolayout.findViewById(R.id.list);
 
 
     }
@@ -110,3 +111,4 @@ public class HomeFrsgment extends Fragment{
         });
     }
 }
+

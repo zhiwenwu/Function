@@ -1,4 +1,7 @@
 <resources>
+    <drawable name="cx1">#81217E</drawable>
+    <drawable name="cx2">#81E217</drawable>
+
     <string name="app_name">氢游记</string>
     <string name="title_activity_login">Sign in</string>
 

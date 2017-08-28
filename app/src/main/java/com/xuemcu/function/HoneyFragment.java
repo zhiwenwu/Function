@@ -1,5 +1,10 @@
 package com.xuemcu.function;
 
+/**
+ * Created by Wuzhiwen on 2017/8/28.
+ */
+
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,14 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+public class HoneyFragment extends Fragment {
 
-/**
- * Created by Wuzhiwen on 2017/8/26.
- */
-
-public class HomeFrsgment extends Fragment{
-
-    private View homelayot;
+    private View honeylayout;
     private int index;
     private ListView list;
     //定义Person
@@ -30,18 +30,18 @@ public class HomeFrsgment extends Fragment{
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        homelayot = inflater.inflate(R.layout.home_layout,
+        honeylayout = inflater.inflate(R.layout.honey_layout,
                 container, false);
 
         InitViews();
         initListAllPersons();
         showByMyBaseAdapter();
-        return homelayot ;
+        return honeylayout ;
     }
 
     private void InitViews(){
 
-        list = (ListView) homelayot.findViewById(R.id.list);
+        list = (ListView) honeylayout.findViewById(R.id.list);
 
 
     }
@@ -110,3 +110,4 @@ public class HomeFrsgment extends Fragment{
         });
     }
 }
+

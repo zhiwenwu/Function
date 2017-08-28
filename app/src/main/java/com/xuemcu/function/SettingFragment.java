@@ -18,9 +18,11 @@ import static com.xuemcu.function.HomeActivity.AccountNumber;
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
 	private static final String TAG = "SettingFragment";
-	ImageView iv_avatar = null;
-	TextView tv_name = null;
-	TextView tv_fxid = null;
+	private ImageView iv_avatar = null;
+	private TextView tv_name = null;
+	private TextView tv_fxid = null;
+	private String logins = "123";
+
 
 	public void onResume() {
 		// TODO Auto-generated method stub
@@ -29,6 +31,20 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 		DataBases dataBases = new DataBases(getActivity(),"DataBase.db",null,1);
 
 		SQLiteDatabase db = dataBases.getWritableDatabase();
+
+		Cursor cursorNu = db.query("Login",null,null,null,null,null,null);
+
+		if(cursorNu.moveToFirst()){
+			do {
+				if(logins.equals(cursorNu.getString(cursorNu.getColumnIndex("logins")))){
+
+					AccountNumber = cursorNu.getString(cursorNu.getColumnIndex("login"));
+					Log.d(TAG, "AccountNumber: "+AccountNumber);
+
+				}
+			}while(cursorNu.moveToNext());
+		}
+
 
 		Cursor cursor = db.query("Users",null,null,null,null,null,null);
 
@@ -90,7 +106,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 		SQLiteDatabase db = dataBases.getWritableDatabase();
 
 		Cursor cursor = db.query("Users",null,null,null,null,null,null);
-
+		AccountNumber = "123";
 		if(cursor.moveToFirst()){
 			do {
 				if(AccountNumber.equals(cursor.getString(cursor.getColumnIndex("User")))){

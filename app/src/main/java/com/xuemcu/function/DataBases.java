@@ -16,7 +16,7 @@ public class DataBases extends SQLiteOpenHelper {
             + "Passwd text, "       //密码
             + "Security text, "     //密保问题
             + "Answer text, "       //密保答案
-            + "Orders text, "    //头像
+            + "Orders text, "       //头像
             + "Sex text, "          //性别
             + "Nickname text)";     //昵称
 
@@ -26,6 +26,17 @@ public class DataBases extends SQLiteOpenHelper {
             + "context text,"       //保存的是主文
             + "path text,"          //图片的路径
             + "time varchar(20))";  //时间
+
+    public static String Login = "create table Login ("
+            + "ID integer primary key autoincrement, "
+            + "logins text,"
+            + "login text)";  //记录当前登录账号
+
+    public static String Shopp = "create table Shopp ("
+            + "ID integer primary key autoincrement, "
+            + "User text,"
+            + "Collect text,"   //记录账号的收藏
+            + "Shopp text)";  //记录账号的私人订制
 
 //    public static String InforMation = "create table InforMation ("
 //            + "ID integer primary key autoincrement, "
@@ -46,6 +57,7 @@ public class DataBases extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Users);
         db.execSQL(Notes);
+        db.execSQL(Login);
         Toast.makeText(mContext,"Create User Succeeded",Toast.LENGTH_SHORT).show();
     }
 

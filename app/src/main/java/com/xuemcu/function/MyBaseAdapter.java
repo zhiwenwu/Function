@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -136,38 +135,41 @@ class MyBaseAdapter extends BaseAdapter {
 //        viewHolder.textViewItem03.setText(person.address);
 //        viewHolder.imageView.setImageResource(person.photo);
 
-        //T
-        viewHolder.Name.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context,
-                        "[textViewItem01.setOnClickListener]点击了"+person.name,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+//
 
-        //对ListView中的每一行信息配置OnClick事件
-        convertView.setOnClickListener(new View.OnClickListener(){
+        //这里不能对监听事情进行监听否则会干扰首页的监听事件
 
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context,
-                        "[convertView.setOnClickListener]点击了"+person.name,
-                        Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
-        //对ListView中的每一行信息配置OnLongClick事件
-        convertView.setOnLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(context,
-                        "[convertView.setOnLongClickListener]点击了"+person.name,
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
+//        viewHolder.Name.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+////                Toast.makeText(context,
+////                        "[textViewItem01.setOnClickListener]点击了"+person.name,
+////                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        //对ListView中的每一行信息配置OnClick事件
+//        convertView.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+////                Toast.makeText(context,
+////                        "[convertView.setOnClickListener]点击了"+person.name,
+////                        Toast.LENGTH_SHORT).show();
+//            }
+//
+//        });
+//
+//        //对ListView中的每一行信息配置OnLongClick事件
+//        convertView.setOnLongClickListener(new View.OnLongClickListener(){
+//            @Override
+//            public boolean onLongClick(View v) {
+////                Toast.makeText(context,
+////                        "[convertView.setOnLongClickListener]点击了"+person.name,
+////                        Toast.LENGTH_SHORT).show();
+//                return true;
+//            }
+//        });
 
         return convertView;
     }

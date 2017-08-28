@@ -22,7 +22,6 @@ import static com.xuemcu.function.HomeActivity.AccountNumber;
 
 public class MyUserInfoActivity extends Activity implements View.OnClickListener {
 
-
     private static final String TAG = "MyUserInfoActivity";
     private ImageView iv_back;
     private RelativeLayout re_avatar;
@@ -38,6 +37,8 @@ public class MyUserInfoActivity extends Activity implements View.OnClickListener
     private String NickName;
     private String Photo;
 
+    private String logins = "123";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,24 @@ public class MyUserInfoActivity extends Activity implements View.OnClickListener
 
     }
     private void InitView(){
+
+        DataBases dataBases = new DataBases(MyUserInfoActivity.this,"DataBase.db",null,1);
+
+        SQLiteDatabase db = dataBases.getWritableDatabase();
+
+        Cursor cursorNu = db.query("Login",null,null,null,null,null,null);
+
+        if(cursorNu.moveToFirst()){
+            do {
+                if(logins.equals(cursorNu.getString(cursorNu.getColumnIndex("logins")))){
+
+                    AccountNumber = cursorNu.getString(cursorNu.getColumnIndex("login"));
+                    Log.d(TAG, "AccountNumber: "+AccountNumber);
+
+                }
+            }while(cursorNu.moveToNext());
+        }
+
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
         re_avatar = (RelativeLayout) findViewById(R.id.re_avatar);
@@ -65,9 +84,6 @@ public class MyUserInfoActivity extends Activity implements View.OnClickListener
         re_sex.setOnClickListener(this);
         tv_fxid.setText(AccountNumber);
 
-        DataBases dataBases = new DataBases(MyUserInfoActivity.this,"DataBase.db",null,1);
-
-        SQLiteDatabase db = dataBases.getWritableDatabase();
 
         Cursor cursor = db.query("Users",null,null,null,null,null,null);
 
@@ -266,7 +282,7 @@ public class MyUserInfoActivity extends Activity implements View.OnClickListener
         values.put("Orders",Photo);
         db.update("Users",values,"User = ?",new String[]{AccountNumber});
         Log.d(TAG, " 现在的数据是: : "+sex+NickName+Photo);
-        cursor = db.query("Users",null,null,null,null,null,null);
+
 
         //测试结果 这里的数据 没有发生改变  ？？？？？？？？？？？？？？？？？？？
 

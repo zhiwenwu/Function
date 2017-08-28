@@ -34,6 +34,7 @@
         <activity android:name=".ForgetActivity" />
         <activity android:name=".XinActivity" />
         <activity android:name=".MyUserInfoActivity" />
+        <activity android:name=".CXActivity" />
     </application>
 
 </manifest>
