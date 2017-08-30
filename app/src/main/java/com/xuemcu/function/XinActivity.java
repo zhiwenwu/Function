@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -29,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class XinActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,7 +41,6 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
 
     private String Path = "####";
 
-    private DataBases dataBases;  //数据库
     GetPathFromUri4kitkat Get;
     // 要申请的权限
     private String[] permissions = {Manifest.permission.CAMERA,
@@ -57,9 +56,6 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
 
     private void InitViews(){
 
-
-        //创建一个数据库
-        dataBases = new DataBases(XinActivity.this,"DataBase.db",null,1);
         Get = new GetPathFromUri4kitkat();
 
         tu = (Button) findViewById(R.id.bu);
@@ -107,8 +103,8 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
                 startActivityForResult(intent, 1);
                 break;
             case R.id.Sava:
-                SQLiteDatabase db = dataBases.getWritableDatabase();
-                ContentValues values = new ContentValues();
+               DatabaseManger databaseManger = DatabaseManger.getInstance(this);
+               ContentValues values = new ContentValues();
 
 //                        + "title text,"         //保存的是标题
 //                        + "context text,"       //保存的是主文
@@ -130,10 +126,10 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
                 else{
                     //取得当前时间
                     SimpleDateFormat formatter   =   new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    TimeZone timeZoneChina = TimeZone.getTimeZone("Asia/Shanghai");//获取时区
+                    formatter.setTimeZone(timeZoneChina);//设置系统时区
                     Date curDate   =   new Date(System.currentTimeMillis());//获取当前时间
                     String time   =   formatter.format(curDate);
-
-                    Log.d(TAG, "onClick: 图片的数量是:"+list.size());
                     for(int i = 0;i < list.size();i ++){
 
                          Path = Path+list.get(i)+"####";
@@ -142,12 +138,20 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
                     }
                     Log.d(TAG, "全部路径:"+Path);
                    // list.clear();//这里的集合需要注意。
+                    values.put("User",new ReadAccount(this).RedA());
                     values.put("title", biao.getText().toString());
                     values.put("context", first_words);
                     values.put("path", Path);
                     values.put("time", time);
-                db.insert("Notes",null,values);
-                values.clear();
+                    Log.d(TAG, "onClick: time                 "+time);
+                    try {
+
+                        databaseManger.insetData("Notes",values);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    values.clear();
                 }
                // Intent intent_back = new Intent(XinActivity.this,HomeActivity.class);
                // intent_back.putExtra("ABC","ABC");    //返回一个数据给主界面  辅助判断是哪个Fragment

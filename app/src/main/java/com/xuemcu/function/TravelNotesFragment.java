@@ -6,11 +6,9 @@ import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,13 +39,15 @@ public class TravelNotesFragment extends Fragment implements View.OnClickListene
     private View travelnotes_layout;
     private ListView list;
     private Button xin;
-    private DataBases dataBases;  //数据库
     private AlertDialog mAlertDialog = null;
     private Button btn_ok = null;
     private Button btn_dele = null;
     private TextView text_dialog;
     private TextView text_Title;
     int Position = 1;
+    private DatabaseManger databaseManger;
+    private Cursor cursor;
+
     List<String> data = new ArrayList<String>();
 
     public void onResume() {
@@ -71,13 +71,15 @@ public class TravelNotesFragment extends Fragment implements View.OnClickListene
 
     private void InitViews(){
 
+        databaseManger = DatabaseManger.getInstance(getActivity());
+        cursor = databaseManger.queryDataCursor("Notes");
+
         View view_Search = View.inflate(getActivity(), R.layout.dailog_query, null);
 
         mAlertDialog = new AlertDialog.Builder(getActivity()).setView(view_Search).create();
 
         mAlertDialog.setTitle("查看游记:");
 
-        dataBases = new DataBases(getActivity(),"DataBase.db",null,1);
 
         list = (ListView) travelnotes_layout.findViewById(R.id.lsit);
         xin = (Button) travelnotes_layout.findViewById(R.id.xin);
@@ -90,8 +92,10 @@ public class TravelNotesFragment extends Fragment implements View.OnClickListene
 
                 Log.d(TAG, "onItemClick:            "+position  +"onItemClick         "    +id);
                 Position = position;
-                mAlertDialog.show();
-                MyHandler.sendEmptyMessage(0x01);
+             //   mAlertDialog.show();
+             //   MyHandler.sendEmptyMessage(0x01);
+
+                //这里点击事件处理       有查看丶删除功能
 
             }
         });
@@ -99,12 +103,12 @@ public class TravelNotesFragment extends Fragment implements View.OnClickListene
     private List<String> getData(){
 
         data.clear();
-        SQLiteDatabase db = dataBases.getWritableDatabase();
-        Cursor cursor = db.query("Notes",null,null,null,null,null,null);
+
         if(cursor.moveToFirst()){
             do{
+                if(new ReadAccount(getActivity()).RedA().equals(cursor.getString(cursor.getColumnIndex("User"))))
 
-                data.add(cursor.getString(cursor.getColumnIndex("title")));
+                    data.add(cursor.getString(cursor.getColumnIndex("title")));
 
             }while(cursor.moveToNext());
 
@@ -128,11 +132,6 @@ public class TravelNotesFragment extends Fragment implements View.OnClickListene
                 startActivity(intent);
                 //	Toast.makeText(getActivity(),"新建游记!",Toast.LENGTH_LONG).show();
                 break;
-
-//			case anjian:
-//				Toast.makeText(getActivity(),"我就是一个按键!",Toast.LENGTH_LONG).show();
-//				break;
-
         }
 
     }
@@ -144,7 +143,6 @@ public class TravelNotesFragment extends Fragment implements View.OnClickListene
             int what = msg.what;
             if (what == 0x01) {    //update
                 int i = 1;
-                Uri uri ;
                 text_dialog = (TextView) mAlertDialog.findViewById(R.id.display_dialog);
                 text_Title = (TextView) mAlertDialog.findViewById(R.id.display_title);
                 btn_ok = (Button) mAlertDialog.findViewById(R.id.btn_ok);
@@ -153,8 +151,7 @@ public class TravelNotesFragment extends Fragment implements View.OnClickListene
                 text_Title.setGravity(Gravity.CENTER);
                 text_dialog.setMovementMethod(new ScrollingMovementMethod());
                 // text_dialog.setText();
-                SQLiteDatabase db = dataBases.getWritableDatabase();
-                Cursor cursor = db.query("Notes",null,null,null,null,null,null);
+
                 if(cursor.moveToFirst()){
                     do{
                         if(cursor.getString(cursor.getColumnIndex("title")).equals(data.get(Position))){

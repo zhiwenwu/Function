@@ -14,6 +14,7 @@ import android.widget.ImageView;
  */
 public class HomeActivity extends Activity implements View.OnClickListener {
 
+    static String AccountNumber = "AccountNumber";
     private static final String TAG = "HomeActivity";
     private HomePageFragment homePageFragment;
     private TravelNotesFragment travelNotesFragment;
@@ -63,6 +64,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         travelnoteslayout.setOnClickListener(this);
         orderlayout.setOnClickListener(this);
         settingLayout.setOnClickListener(this);
+
+        Log.d(TAG, "initViews: "+new ReadAccount(this).RedA());
 
 
     }

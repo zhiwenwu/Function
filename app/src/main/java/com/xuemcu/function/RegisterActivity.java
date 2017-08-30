@@ -6,6 +6,7 @@ package com.xuemcu.function;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText Registe_order;
     private EditText Registe_passwd;
     private Button Registe;
+    private DatabaseManger databaseManger;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,32 +59,43 @@ public class RegisterActivity extends AppCompatActivity {
                     imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
                             0);
                 }
-
-            DatabaseManger databaseManger = DatabaseManger.getInstance(RegisterActivity.this);
-            ContentValues values = new ContentValues();
+                databaseManger = DatabaseManger.getInstance(RegisterActivity.this);
+                ContentValues values = new ContentValues();
 
                 if(Registe_email.getText().toString().equals("")) {
 
                     Toast.makeText(RegisterActivity.this,"账号为空,请输入账号!",Toast.LENGTH_LONG).show();
+                    Registe_email.requestFocus();
+
+                }else if(check(Registe_email.getText().toString())){
+
+                    Toast.makeText(RegisterActivity.this,"该账号已存在!",Toast.LENGTH_LONG).show();
+                    Registe_email.setText("");
+                    Registe_email.requestFocus();
 
                 }else if(Registe_password.getText().toString().equals("")) {
 
                     Toast.makeText(RegisterActivity.this,"密码为空,请输入密码!",Toast.LENGTH_LONG).show();
+                    Registe_password.requestFocus();
 
                 }else if(Registe_mima.getText().toString().equals("")) {
 
                     Toast.makeText(RegisterActivity.this,"问题为空,请输入问题!",Toast.LENGTH_LONG).show();
+                    Registe_mima.requestFocus();
 
                 }else if(Registe_daan.getText().toString().equals("")) {
 
                     Toast.makeText(RegisterActivity.this,"问题答案为空,请输入问题答案!",Toast.LENGTH_LONG).show();
+                    Registe_daan.requestFocus();
 
                 }else if(Registe_password.getText().toString().length() <= 4){
 
                     Toast.makeText(RegisterActivity.this,"密码太短了!",Toast.LENGTH_LONG).show();
+                    Registe_password.requestFocus();
                 }else if(Registe_order.getText().toString().equals("")){
 
                     Toast.makeText(RegisterActivity.this,"昵称为空!",Toast.LENGTH_LONG).show();
+                    Registe_order.requestFocus();
 
                 }else {
                         if(Registe_passwd.getText().toString().equals(Registe_password.getText().toString())) {
@@ -123,7 +136,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                         }else{
 
+
+                            Registe_passwd.setText("");
+                            Registe_password.setText("");
+                            Registe_passwd.requestFocus();
                             Toast.makeText(RegisterActivity.this,"两次密码不相同!",Toast.LENGTH_LONG).show();
+
+
                         }
 
                 }
@@ -133,4 +152,27 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+    private boolean check(String user){
+        Log.d(TAG, "check: zhixing");
+        Cursor cursor = databaseManger.queryDataCursor("Users");
+
+        if(cursor.moveToFirst()){
+            do{
+                if(user.equals(cursor.getString(cursor.getColumnIndex("User"))))
+                {
+                    Log.d(TAG, "check: zhixing...........");
+                    return true;
+                }
+
+            }while(cursor.moveToNext());
+
+
+        }
+
+
+
+        return false;
+    }
+
+
 }
