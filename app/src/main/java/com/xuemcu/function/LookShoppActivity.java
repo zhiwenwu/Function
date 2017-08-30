@@ -107,7 +107,9 @@ public class LookShoppActivity extends Activity implements View.OnClickListener{
 
 
         }
+        Log.d(TAG, "123: "+Num);
         Num = Integer.valueOf(tu).intValue();
+        Log.d(TAG, "456: "+Num);
         Name.setText(mingcheng);
         BoundAry(Num);
 

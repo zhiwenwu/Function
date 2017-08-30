@@ -36,9 +36,13 @@
         <activity android:name=".MyUserInfoActivity" />
         <activity android:name=".CXActivity" />
         <activity android:name=".LookCollectActivity" />
-        <activity android:name=".CollectActivity" />
+        <activity android:name=".CollectActivity"
+            android:theme="@style/AppThemes"/>
         <activity android:name=".LookShoppActivity" />
-        <activity android:name=".ShoppActivity"></activity>
+        <activity android:name=".ShoppActivity"
+            android:theme="@style/AppThemes">
+
+        </activity>
     </application>
 
 </manifest>

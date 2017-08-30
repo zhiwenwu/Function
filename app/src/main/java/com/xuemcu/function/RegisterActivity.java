@@ -4,6 +4,7 @@ package com.xuemcu.function;
 //处理注册账号界面
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,11 +36,11 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-        InitView();
+        InitViews();
 
     }
 
-    private void InitView(){
+    private void InitViews(){
 
         Registe_email = (EditText) findViewById(R.id.Registe_email);
         Registe_password = (EditText) findViewById(R.id.Registe_password);
@@ -55,6 +57,13 @@ public class RegisterActivity extends AppCompatActivity {
         Registe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //优化
+                InputMethodManager imm =  (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if(imm != null) {
+
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                            0);
+                }
 
                 SQLiteDatabase db = dataBases.getWritableDatabase();
                 ContentValues values = new ContentValues();
@@ -102,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    SystemClock.sleep(3000);
+                                    SystemClock.sleep(1500);
                                     Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                                     intent.putExtra("zhanghao",Registe_email.getText().toString());
                                     startActivity(intent);

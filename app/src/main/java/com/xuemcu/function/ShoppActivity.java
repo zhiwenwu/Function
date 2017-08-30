@@ -31,6 +31,14 @@ public class ShoppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopp);
 
+        InitViews();
+
+
+    }
+
+
+    private void InitViews(){
+
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,9 +66,7 @@ public class ShoppActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
 
     private List<String> getData(){
 

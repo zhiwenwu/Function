@@ -48,9 +48,6 @@ public class LookCollectActivity extends Activity implements View.OnClickListene
 
         InitViews();
 
-
-
-
     }
 
     private void InitViews(){

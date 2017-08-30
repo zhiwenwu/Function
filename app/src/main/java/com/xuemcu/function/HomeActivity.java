@@ -15,16 +15,16 @@ import android.widget.ImageView;
 /**
  * 项目的主Activity，所有的Fragment都嵌入在这里。
  *
- * @author guolin
+ * @author wuzhiwen
  */
 public class HomeActivity extends Activity implements View.OnClickListener {
 
 
     public static String AccountNumber;
     private static final String TAG = "HomeActivity";
-    private MessageFragment messageFragment;
-    private ContactsFragment contactsFragment;
-    private NewsFragment newsFragment;
+    private HomePageFragment homePageFragment;
+    private TravelNotesFragment travelNotesFragment;
+    private OrderFragment orderFragment;
     private SettingFragment settingFragment;
     private View messageLayout;
     private View contactsLayout;
@@ -37,7 +37,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     private FragmentManager fragmentManager;
 
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
         Log.d(TAG, "onBackPressed!");
     }
 
@@ -45,13 +45,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
 
         fragmentManager = getFragmentManager();
-//        if (savedInstanceState != null) {
-//            allFrg =  fragmentManager.findFragmentByTag("allFrg");
-//            movieFrg =  fragmentManager.findFragmentByTag("movieFrg");
-//            newsFrg =  fragmentManager.findFragmentByTag("newsFrg");
-//            otherFrg =  fragmentManager.findFragmentByTag("otherFrg");
-//        }
-        //注释这句话 是为了解决重叠问题  不保存Fragment的状态
         super.onCreate(savedInstanceState);
        // requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
@@ -75,10 +68,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         contactsImage = (ImageView) findViewById(R.id.contacts_image);
         newsImage = (ImageView) findViewById(R.id.news_image);
         settingImage = (ImageView) findViewById(R.id.setting_image);
-//        messageText = (TextView) findViewById(R.id.message_text);
-//        contactsText = (TextView) findViewById(R.id.contacts_text);
-//        newsText = (TextView) findViewById(R.id.news_text);
-//        settingText = (TextView) findViewById(R.id.setting_text);
+
         messageLayout.setOnClickListener(this);
         contactsLayout.setOnClickListener(this);
         newsLayout.setOnClickListener(this);
@@ -100,15 +90,17 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         if(cursor2.getCount()==0)
         {
             values.put("logins","123");
-            values.put("login",AccountNumber);
+            values.put("login",string);
             db.insert("Login",null,values);
             values.clear();
             Log.d(TAG, "initViews: 插入数据");
             //执行插入语句
         }else {
 
-            values.put("login",AccountNumber);
+            values.put("login",string);
             db.update("Login",values,"logins = ?",new String[]{"123"});
+
+            Log.d(TAG, "initViews: BUGBUGBUGbUG");
         }
         Cursor cursor = db.query("Login",null,null,null,null,null,null);
         if(cursor.moveToFirst()) {
@@ -161,39 +153,39 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 // 当点击时，改变控件的图片和文字颜色
                 messageImage.setImageResource(R.drawable.shouye2);
                 //messageText.setTextColor(Color.WHITE);
-                if (messageFragment == null) {
+                if (homePageFragment == null) {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
-                    messageFragment = new MessageFragment();
-                    transaction.add(R.id.content, messageFragment);
+                    homePageFragment = new HomePageFragment();
+                    transaction.add(R.id.content, homePageFragment);
                 } else {
                     // 如果MessageFragment不为空，则直接将它显示出来
-                    transaction.show(messageFragment);
+                    transaction.show(homePageFragment);
                 }
                 break;
             case 1:
                 // 当点击时，改变控件的图片和文字颜色
                 contactsImage.setImageResource(R.drawable.youji2);
                 //contactsText.setTextColor(Color.WHITE);
-                if (contactsFragment == null) {
+                if (travelNotesFragment == null) {
                     // 如果ContactsFragment为空，则创建一个并添加到界面上
-                    contactsFragment = new ContactsFragment();
-                    transaction.add(R.id.content, contactsFragment);
+                    travelNotesFragment = new TravelNotesFragment();
+                    transaction.add(R.id.content, travelNotesFragment);
                 } else {
                     // 如果ContactsFragment不为空，则直接将它显示出来
-                    transaction.show(contactsFragment);
+                    transaction.show(travelNotesFragment);
                 }
                 break;
             case 2:
                 // 当点击时，改变控件的图片和文字颜色
                 newsImage.setImageResource(R.drawable.dingzhi2);
                // newsText.setTextColor(Color.WHITE);
-                if (newsFragment == null) {
+                if (orderFragment == null) {
                     // 如果NewsFragment为空，则创建一个并添加到界面上
-                    newsFragment = new NewsFragment();
-                    transaction.add(R.id.content, newsFragment);
+                    orderFragment = new OrderFragment();
+                    transaction.add(R.id.content, orderFragment);
                 } else {
                     // 如果NewsFragment不为空，则直接将它显示出来
-                    transaction.show(newsFragment);
+                    transaction.show(orderFragment);
                 }
                 break;
             case 3:
@@ -216,26 +208,23 @@ public class HomeActivity extends Activity implements View.OnClickListener {
 
     private void clearSelection() {
         messageImage.setImageResource(R.drawable.shouye1);
-        //messageText.setTextColor(Color.parseColor("#82858b"));
         contactsImage.setImageResource(R.drawable.youji1);
-        //contactsText.setTextColor(Color.parseColor("#82858b"));
         newsImage.setImageResource(R.drawable.dingzhi1);
-        //newsText.setTextColor(Color.parseColor("#82858b"));
         settingImage.setImageResource(R.drawable.shezhi1);
-        //settingText.setTextColor(Color.parseColor("#82858b"));
+
     }
 
     private void hideFragments(FragmentTransaction transaction) {
 
         Log.d(TAG, "hideFragments: 我执行了");
-        if (messageFragment != null) {
-            transaction.hide(messageFragment);
+        if (homePageFragment != null) {
+            transaction.hide(homePageFragment);
         }
-        if (contactsFragment != null) {
-            transaction.hide(contactsFragment);
+        if (travelNotesFragment != null) {
+            transaction.hide(travelNotesFragment);
         }
-        if (newsFragment != null) {
-            transaction.hide(newsFragment);
+        if (orderFragment != null) {
+            transaction.hide(orderFragment);
         }
         if (settingFragment != null) {
             transaction.hide(settingFragment);

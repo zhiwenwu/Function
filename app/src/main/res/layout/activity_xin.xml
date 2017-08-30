@@ -28,7 +28,8 @@
             android:id="@+id/content_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="请输入主文"/>
+            android:hint="请输入主文"
+            android:gravity="top"/>
 
     </LinearLayout>
 

@@ -28,8 +28,16 @@ public class CollectActivity extends AppCompatActivity {
     private String AccountNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+       // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collect);
+
+
+        InitViews();
+
+    }
+
+    private void InitViews(){
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +65,6 @@ public class CollectActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 

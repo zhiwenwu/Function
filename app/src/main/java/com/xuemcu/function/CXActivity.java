@@ -52,6 +52,12 @@ public class CXActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cx);
 
+
+        InitViews();
+    }
+
+    private void InitViews(){
+
         imageView   = (ImageView) findViewById(R.id.imageView);
         btnJieshao  = (Button) findViewById(R.id.Jieshao);
         btnFeiyong  = (Button) findViewById(R.id.Feiyong);
@@ -89,6 +95,7 @@ public class CXActivity extends Activity implements View.OnClickListener{
         //textView.setText("产品介绍");
         BoundAry(Num);
         BoundAry_jieshao(Num);
+
 
     }
 

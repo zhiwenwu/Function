@@ -4,18 +4,23 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.xuemcu.function.HomeActivity.AccountNumber;
 
@@ -45,10 +50,10 @@ public class MyUserInfoActivity extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_myinfo);
 
         Log.d(TAG, "onCreate: 进入个人信息设置界面");
-        InitView();
+        InitViews();
 
     }
-    private void InitView(){
+    private void InitViews(){
 
         DataBases dataBases = new DataBases(MyUserInfoActivity.this,"DataBase.db",null,1);
 
@@ -194,13 +199,33 @@ public class MyUserInfoActivity extends Activity implements View.OnClickListener
     }
     private void NameDialog() {
         final AlertDialog dlg = new AlertDialog.Builder(this).create();
+        dlg.setView(new EditText(this));
         dlg.show();
         Window window = dlg.getWindow();
         // *** 主要就是在这里实现这种效果的.
         // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
         window.setContentView(R.layout.nickname_dialog);
-
         final EditText editText = (EditText) window.findViewById(R.id.nickname);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                //设置可获得焦点
+                editText.setFocusable(true);
+                editText.setFocusableInTouchMode(true);
+                //请求获得焦点
+                editText.requestFocus();
+                //调用系统输入法
+                InputMethodManager inputManager = (InputMethodManager) editText
+                        .getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(editText, 0);
+            }
+        }, 200);
+
+
+
         // 为确认按钮添加事件,执行退出应用操作
         Button qu = (Button) window.findViewById(R.id.qu);
         qu.setOnClickListener(new View.OnClickListener() {
@@ -315,4 +340,7 @@ public class MyUserInfoActivity extends Activity implements View.OnClickListener
         //startActivity(intent);
         finish();
     }
+
+
+
 }

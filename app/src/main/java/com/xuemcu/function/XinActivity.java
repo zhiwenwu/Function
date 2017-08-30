@@ -51,9 +51,16 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xin);
+
+        InitViews();
+    }
+
+    private void InitViews(){
+
+
         //创建一个数据库
         dataBases = new DataBases(XinActivity.this,"DataBase.db",null,1);
-         Get = new GetPathFromUri4kitkat();
+        Get = new GetPathFromUri4kitkat();
 
         tu = (Button) findViewById(R.id.bu);
         biao = (EditText) findViewById(R.id.biao);
@@ -64,6 +71,7 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
 
         //定义个路径地址保存集合
         list = new ArrayList<>();
+
     }
 
     @Override
@@ -141,9 +149,9 @@ public class XinActivity extends AppCompatActivity implements View.OnClickListen
                 db.insert("Notes",null,values);
                 values.clear();
                 }
-                Intent intent_back = new Intent(XinActivity.this,HomeActivity.class);
-                intent_back.putExtra("ABC","ABC");    //返回一个数据给主界面  辅助判断是哪个Fragment
-                startActivity(intent_back);
+               // Intent intent_back = new Intent(XinActivity.this,HomeActivity.class);
+               // intent_back.putExtra("ABC","ABC");    //返回一个数据给主界面  辅助判断是哪个Fragment
+              //  startActivity(intent_back);
                 finish();
                 break;
         }

@@ -27,10 +27,10 @@ public class ForgetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget);
-        InitView();
+        InitViews();
     }
 
-    private void InitView(){
+    private void InitViews(){
 
         account = (EditText) findViewById(R.id.zhang);
         Security = (EditText) findViewById(R.id.ma);

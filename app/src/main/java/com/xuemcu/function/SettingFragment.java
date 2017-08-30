@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import static com.xuemcu.function.HomeActivity.AccountNumber;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
@@ -22,6 +21,12 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 	private TextView tv_name = null;
 	private TextView tv_fxid = null;
 	private String logins = "123";
+	private String AccountNumber;
+
+//	public void onBackPressed() {
+//		super.onBackPressed();
+//		Log.d(TAG, "onBackPressed!");
+//	}
 
 
 	public void onResume() {
@@ -38,7 +43,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 			do {
 				if(logins.equals(cursorNu.getString(cursorNu.getColumnIndex("logins")))){
 
-					AccountNumber = cursorNu.getString(cursorNu.getColumnIndex("login"));
+					AccountNumber = cursorNu.getString(cursorNu.getColumnIndex("login")).toString();
 					Log.d(TAG, "AccountNumber: "+AccountNumber);
 
 				}
@@ -47,6 +52,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
 
 		Cursor cursor = db.query("Users",null,null,null,null,null,null);
+
 
 		if(cursor.moveToFirst()){
 			do {
@@ -127,11 +133,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 							break;
 
 					}
-
-//					NickName = cursor.getString(cursor.getColumnIndex("Nickname"));
-//					Photo = cursor.getString(cursor.getColumnIndex("Orders"));
-
-					//Log.d(TAG, "InitView: "+sex+NickName+Photo);
 
 				}
 			}while(cursor.moveToNext());
