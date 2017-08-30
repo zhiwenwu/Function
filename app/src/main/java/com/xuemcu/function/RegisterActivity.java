@@ -6,7 +6,6 @@ package com.xuemcu.function;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private static final String TAG = "RegisterActivity";
-    private DataBases dataBases;
     private EditText Registe_email;
     private EditText Registe_password;
     private EditText Registe_mima;
@@ -33,8 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-
 
         InitViews();
 
@@ -51,13 +47,10 @@ public class RegisterActivity extends AppCompatActivity {
         Registe_passwd = (EditText) findViewById(R.id.Registe_password_ag);
 
 
-        dataBases = new DataBases(RegisterActivity.this,"DataBase.db",null,1);
-
-
         Registe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //优化
+                //优化   点击注册按键时 自动隐藏虚拟键盘
                 InputMethodManager imm =  (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 if(imm != null) {
 
@@ -65,8 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
                             0);
                 }
 
-                SQLiteDatabase db = dataBases.getWritableDatabase();
-                ContentValues values = new ContentValues();
+            DatabaseManger databaseManger = DatabaseManger.getInstance(RegisterActivity.this);
+            ContentValues values = new ContentValues();
 
                 if(Registe_email.getText().toString().equals("")) {
 
@@ -101,8 +94,15 @@ public class RegisterActivity extends AppCompatActivity {
                             values.put("Sex", "男");
                             values.put("Nickname", Registe_order.getText().toString());
 
-                            db.insert("Users",null,values);
+                            try {
+
+                                databaseManger.insetData("Users",values);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             values.clear();
+                            databaseManger.close();
 
                             Log.d(TAG, "onClick:   注册用户成功");
                             Toast.makeText(RegisterActivity.this," 注册用户成功!",Toast.LENGTH_LONG).show();
@@ -111,9 +111,10 @@ public class RegisterActivity extends AppCompatActivity {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    SystemClock.sleep(1500);
+                                    SystemClock.sleep(1000);
                                     Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                                    intent.putExtra("zhanghao",Registe_email.getText().toString());
+                                    intent.putExtra("account",Registe_email.getText().toString());
+                                    intent.putExtra("password",Registe_password.getText().toString());
                                     startActivity(intent);
                                     finish();                            //做一个界面的销毁
                                     Log.d(TAG, "onClick:   注册用户程序结束!");

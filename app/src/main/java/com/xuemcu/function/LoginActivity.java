@@ -2,269 +2,229 @@ package com.xuemcu.function;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.CursorLoader;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.content.Loader;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
 import static com.xuemcu.function.R.id.email;
 
-/**
- * A login screen that offers login via email/password.
- */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-
+/*
+* 时间:2017年8月30日23:21
+* 事件: 对登录页面进行全部整理重写
+* 功能: 实现可以自动登录，但是没有进行功能添加
+*
+* */
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
-    private static final int REQUEST_READ_CONTACTS = 0;
-    private String[] DUMMY_CREDENTIALS = new String[50];// 这里存放临时的账号  直接操作这个数据
-    private UserLoginTask mAuthTask = null;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
-    private CheckBox rememberPass;
-    private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
+    private CheckBox rememberpasswd;
+    private UserLoginTask mAuthTask;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor_account;
+    private SharedPreferences.Editor editor_passwd;
     private Button register;
     private Button forget;
-    private DataBases dataBases;
-    private boolean isFlog = true;
-    private int i = 0;
+    private Button sign_in;
+    private DatabaseManger databaseManger;
+    private int Passwd_Length = 4;
+
+    private View mProgressView;
+    private View mLoginFormView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
 
 
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
-        // Set up the login form.
+        InitViews();
+
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
+
+        }
+
+    private void InitViews(){
+
         mEmailView = (AutoCompleteTextView) findViewById(email);
-        populateAutoComplete();
-
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-        rememberPass = (CheckBox) findViewById(R.id.rememberpass);
-        boolean isRemember = pref.getBoolean("remember_password",false);
+        rememberpasswd = (CheckBox) findViewById(R.id.rememberpasswd);
+        sign_in = (Button) findViewById(R.id.email_sign_in);
+        register = (Button) findViewById(R.id.register);
+        forget = (Button) findViewById(R.id.forget);
+
+        sign_in.setOnClickListener(this);
+        register.setOnClickListener(this);
+        forget.setOnClickListener(this);
+
+        databaseManger = DatabaseManger.getInstance(LoginActivity.this);
+
+        try {
+             if(databaseManger.getDataCounts("Users") == 0){
+
+                 Toast.makeText(this,"此软件里没有任何账号,请先注册一个账号!",Toast.LENGTH_LONG).show();
+
+             }
+        } catch (Exception e) {
+            Toast.makeText(this,"此软件里没有任何账号,请先注册一个账号!",Toast.LENGTH_LONG).show();
+
+            e.printStackTrace();
+
+        }
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isRemember = sharedPreferences.getBoolean("remember_passwd",false);
 
         if(isRemember){        //优先检测 记住账号按键点击事件
 
-            String account = pref.getString("account","");
-            String password = pref.getString("passeord","");
+            String account = sharedPreferences.getString("account","");
+            String password = sharedPreferences.getString("password","");
             mEmailView.setText(account);
             mPasswordView.setText(password);
-            rememberPass.setChecked(true);
-        }
+            rememberpasswd.setChecked(true);
+
+         }
+
         try{                    //再处理从注册账号intent传过来的 新的账号信息  自动填写
             Intent intent = getIntent();
-            String data = intent.getStringExtra("zhanghao");
-            Log.d(TAG, "onCreate: 读取注册界面        "+data);
-            if(intent.getStringExtra("zhanghao").length()>0)
-            {
+            Log.d(TAG, "onCreate: 读取注册界面        "+intent.getStringExtra("account"));
+            Log.d(TAG, "onCreate: 读取注册界面        "+intent.getStringExtra("password"));
+
+            if(intent.getStringExtra("account").length()>0) {
+
                 Log.d(TAG, "onCreate: 获取注册界面账号成功!");
 
-                mEmailView.setText(intent.getStringExtra("zhanghao"));
-                isFlog = false;
+                mEmailView.setText(intent.getStringExtra("account"));
+                mPasswordView.setText(intent.getStringExtra("password"));
             }
 
         }catch(Exception e){
 
         }
-        dataBases = new DataBases(LoginActivity.this,"DataBase.db",null,1);
 
-        SQLiteDatabase db = dataBases.getWritableDatabase();
 
-        Cursor cursor = db.query("Users",null,null,null,null,null,null);
+        //这里是将光标移动输入框的最后
+        mEmailView.setSelection(mEmailView.getText().length());
+    }
 
+    public void userLogin() {
+        String usernameString = mEmailView.getText().toString();
+        String passwordString = mPasswordView.getText().toString();
+
+        if (VerifyUser(usernameString, passwordString)) {
+
+            editor_account = sharedPreferences.edit();
+            editor_passwd = sharedPreferences.edit();
+            editor_account.putBoolean("remember_user",true);
+            editor_account.putString("account",usernameString);
+            if(rememberpasswd.isChecked()) {
+
+                editor_passwd.putBoolean("remember_passwd",true);
+                editor_passwd.putString("password",passwordString);
+
+                     Log.d(TAG, "onPostExecute: 记录密码");
+
+                }else{
+                     editor_passwd.clear();
+                    Log.d(TAG, "onPostExecute: 清除记住密码，忘记密码");
+
+                }
+
+            editor_account.apply();
+            editor_passwd.apply();
+
+
+        }
+    }
+
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+
+            case R.id.email_sign_in:
+                if(DetectEmpty(mEmailView.getText().toString(),mPasswordView.getText().toString())){
+                    showProgress(true);
+
+                    mAuthTask = new UserLoginTask(mEmailView.getText().toString(),mPasswordView.getText().toString());
+                    mAuthTask.execute((Void) null);
+
+                }
+                break;
+            case R.id.register:
+                Intent register_intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(register_intent);
+              //  finish();
+                break;
+            case R.id.forget:
+                Intent forget_intent = new Intent(LoginActivity.this,ForgetActivity.class);
+                startActivity(forget_intent);
+                Log.d(TAG, "onClick: 点击忘记密码!");
+                break;
+        }
+
+    }
+    //检测账号 或者 密码长度
+    private boolean DetectEmpty(String email,String passwd){
+
+        if(email.isEmpty())
+        {
+            Toast.makeText(this,"账号为空，请输入账号!",Toast.LENGTH_LONG).show();
+            return  false;
+
+        }else if(passwd.isEmpty() ||  (passwd.length() <= Passwd_Length)){
+
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            return false;
+        }
+        return true;
+    }
+    private boolean VerifyUser(String email,String passwd){
+
+        Cursor cursor = databaseManger.queryDataCursor("Users");
         if(cursor.moveToFirst()){
-
             do {
+                if(email.equals(cursor.getString(cursor.getColumnIndex("User")))) {
+                    if (passwd.equals(cursor.getString(cursor.getColumnIndex("Passwd")))) {
 
-                String User = cursor.getString(cursor.getColumnIndex("User"));
-                String Passwd = cursor.getString(cursor.getColumnIndex("Passwd"));
-                DUMMY_CREDENTIALS[i] = User+":"+Passwd;
-                Log.d(TAG, "onCreate: 用户名:密码      "+DUMMY_CREDENTIALS[i]);
-                i++;
+                        return true;
+
+                    }else{
+                        //告知用户  密码错误，并清空密码输入框
+                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.setText("");
+
+                    }
+                }else {
+
+                    Log.d(TAG, "该账号不存在...");
+                }
 
             }while(cursor.moveToNext());
         }
 
 
-
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-
-        register = (Button) findViewById(R.id.register);
-        register.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //这里实现注册账号点击事件
-                Log.d(TAG, "onClick: 注册账号点击事件");
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
-                finish();
-
-            }
-        });
-        forget = (Button) findViewById(R.id.forget);
-        forget.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //这里实现找回密码点击事件
-                Log.d(TAG, "onClick: 找回密码点击事件");
-                Intent intent = new Intent(LoginActivity.this,ForgetActivity.class);
-                startActivity(intent);
-              //  finish();
-            }
-        });
-
-        Log.d(TAG, "onCreate: 登录界面进入成功");
-        // Toast.makeText(LoginActivity.this,"wuzhiwen",Toast.LENGTH_LONG).show();
-    }
-
-    private void populateAutoComplete() {
-        if (!mayRequestContacts()) {
-            return;
-        }
-
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
         return false;
     }
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
-    }
-    private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } //else if (!isEmailValid(email))
-        else if (false){
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-
-        if (cancel) {
-
-            focusView.requestFocus();
-        } else {
-
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-        }
-    }
-
-    private boolean isEmailValid(String email) {
-
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {     //判断密码长度
-
-        return password.length() > 4;
-    }
-
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    //该方法 引用 android studio  官方LoginActivity里
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -297,64 +257,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
 
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-    }
-
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
@@ -376,44 +279,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+            return VerifyUser(mEmail,mPassword);
 
-            // TODO: register the new account here.
-            return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
+            if(success){
+                userLogin();
+                ContentValues values = new ContentValues();
+                try {
+                    if(databaseManger.getDataCounts("Login") == 0){
 
-            if (success) {
-                editor = pref.edit();
-                if(rememberPass.isChecked()) {
-                    editor.putBoolean("remember_password",true);
-                    editor.putString("account",mEmail);
-                    //   editor.putString("password",mEmail);
-                    Log.d(TAG, "onPostExecute: 记录密码");
-                }else{
-                    editor.clear();
-                    Log.d(TAG, "onPostExecute: 清除记住密码，忘记密码");
+                        values.put("logins","account");
+                        values.put("login",mEmail);
 
+                            databaseManger.insetData("Login",values);
+                            values.clear();
+                    }else{
+                        values.put("login",mEmail);
+                        databaseManger.updateData("Login",values,"logins = ?",new String[]{"account"});
+                        values.clear();
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d(TAG, "onPostExecute: 这里异常,没有该表!");
                 }
-                editor.apply();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("dealerid", mEmail);
-                //注意  得先传递值  然后才能跳转界面  否则值不能被成功的传递过去
                 Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                intent.putExtra("mEmail",mEmail);                      //在这里做一个账号的传递  在主界面里面需要判断是哪个账户登录的!
                 startActivity(intent);
-                Log.d(TAG, "onPostExecute: 传递的账号是:"+mEmail);
                 finish();
+                Log.d(TAG, "onPostExecute: 正在跳转主界面");
+
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -426,4 +325,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
 }
+
+

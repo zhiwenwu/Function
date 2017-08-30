@@ -16,7 +16,7 @@
         android:background="@drawable/tab_1">
 
         <RelativeLayout
-            android:id="@+id/message_layout"
+            android:id="@+id/homepage_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -38,7 +38,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/contacts_layout"
+            android:id="@+id/travelnots_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -61,7 +61,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/news_layout"
+            android:id="@+id/personalorder_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">

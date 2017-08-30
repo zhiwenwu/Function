@@ -81,7 +81,7 @@
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="wuzhiwen"
+            android:text="buzhdiao"
             tools:ignore="HardcodedText,InefficientWeight,NestedWeights"
             android:textSize="14dp"
             android:textStyle="italic"

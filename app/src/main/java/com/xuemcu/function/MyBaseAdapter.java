@@ -42,10 +42,7 @@ class MyBaseAdapter extends BaseAdapter {
 
 
     public class ViewHolder{
-//        TextView textViewItem01;
-//        TextView textViewItem02;
-//        TextView textViewItem03;
-//        ImageView imageView;
+
         ImageView portrait;
         TextView Name;
         ImageView picture1;
@@ -61,7 +58,7 @@ class MyBaseAdapter extends BaseAdapter {
         if(convertView==null){
             Log.d("MyBaseAdapter", "新建convertView,position="+position);
             convertView = LayoutInflater.from(context).inflate(
-                    R.layout.list_view01_item, null);
+                    R.layout.listview_layout, null);
             viewHolder = new ViewHolder();
             viewHolder.Name = (TextView)convertView.findViewById(R.id.Name);
             viewHolder.text = (TextView)convertView.findViewById(R.id.text);
@@ -70,50 +67,6 @@ class MyBaseAdapter extends BaseAdapter {
             viewHolder.picture2 = (ImageView)convertView.findViewById(R.id.picture2);
             viewHolder.picture3 = (ImageView)convertView.findViewById(R.id.picture3);
             viewHolder.portrait = (ImageView) convertView.findViewById(R.id.portrait);
-
-
-//            viewHolder = new ViewHolder();
-//            viewHolder.textViewItem01 = (TextView)convertView.findViewById(
-//                    R.id.listView01Item01);
-//            viewHolder.textViewItem02 = (TextView)convertView.findViewById(
-//                    R.id.listView01Item02);
-//            viewHolder.textViewItem03 = (TextView)convertView.findViewById(
-//                    R.id.listView01Item03);
-
-
-//            //动态增加1个ImageView
-//            viewHolder.picture1 = new ImageView(context);
-//            LinearLayout.LayoutParams mParams1 = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                    LinearLayout.LayoutParams.MATCH_PARENT);
-//            mParams1.gravity = Gravity.CENTER;
-//            mParams1.width=50;
-//            viewHolder.picture1.setLayoutParams(mParams1);
-//            //这个ImageView放到ListView的第2列之后
-//            ((LinearLayout)convertView).addView(viewHolder.picture1,2);
-//
-//            //动态增加1个ImageView
-//            viewHolder.picture2 = new ImageView(context);
-//            LinearLayout.LayoutParams mParams2 = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT,
-//                    LinearLayout.LayoutParams.WRAP_CONTENT);
-//            mParams2.gravity = Gravity.CENTER;
-//            mParams2.width=50;
-//            viewHolder.picture2.setLayoutParams(mParams2);
-//            //这个ImageView放到ListView的第2列之后
-//            ((LinearLayout)convertView).addView(viewHolder.picture2,2);
-//
-//            //动态增加1个ImageView
-//            viewHolder.picture3 = new ImageView(context);
-//            LinearLayout.LayoutParams mParams3 = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT,
-//                    LinearLayout.LayoutParams.WRAP_CONTENT);
-//            mParams3.gravity = Gravity.CENTER;
-//            mParams3.width=50;
-//            viewHolder.picture3.setLayoutParams(mParams3);
-//            //这个ImageView放到ListView的第2列之后
-//            ((LinearLayout)convertView).addView(viewHolder.picture3,2);
-
 
             convertView.setTag(viewHolder);
         }else{
@@ -129,47 +82,6 @@ class MyBaseAdapter extends BaseAdapter {
         viewHolder.picture3.setImageResource(person.photo3);
         viewHolder.text.setText(person.Text);
 
-
-//        viewHolder.textViewItem01.setText(String.valueOf(person.id));
-//        viewHolder.textViewItem02.setText(person.name);
-//        viewHolder.textViewItem03.setText(person.address);
-//        viewHolder.imageView.setImageResource(person.photo);
-
-//
-
-        //这里不能对监听事情进行监听否则会干扰首页的监听事件
-
-//        viewHolder.Name.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-////                Toast.makeText(context,
-////                        "[textViewItem01.setOnClickListener]点击了"+person.name,
-////                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        //对ListView中的每一行信息配置OnClick事件
-//        convertView.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-////                Toast.makeText(context,
-////                        "[convertView.setOnClickListener]点击了"+person.name,
-////                        Toast.LENGTH_SHORT).show();
-//            }
-//
-//        });
-//
-//        //对ListView中的每一行信息配置OnLongClick事件
-//        convertView.setOnLongClickListener(new View.OnLongClickListener(){
-//            @Override
-//            public boolean onLongClick(View v) {
-////                Toast.makeText(context,
-////                        "[convertView.setOnLongClickListener]点击了"+person.name,
-////                        Toast.LENGTH_SHORT).show();
-//                return true;
-//            }
-//        });
 
         return convertView;
     }

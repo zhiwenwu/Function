@@ -3,7 +3,6 @@ package com.xuemcu.function;
 //处理密码忘记的界面
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,8 +20,7 @@ public class ForgetActivity extends AppCompatActivity {
     private EditText answer;
     private TextView password;
     private Button lookup;
-    private DataBases dataBases;
-    private int Err = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +36,13 @@ public class ForgetActivity extends AppCompatActivity {
         password = (TextView) findViewById(R.id.mima);
         lookup = (Button) findViewById(R.id.chazhao);
 
+        final DatabaseManger databaseManger = DatabaseManger.getInstance(ForgetActivity.this);
 
         lookup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                dataBases = new DataBases(ForgetActivity.this,"DataBase.db",null,1);
-
-                SQLiteDatabase db = dataBases.getWritableDatabase();
-
-                Cursor cursor = db.query("Login",null,null,null,null,null,null);
-
-
+                Cursor cursor = databaseManger.queryDataCursor("Users");
 
                 if(account.getText().toString().equals(""))
                 {
@@ -77,7 +70,6 @@ public class ForgetActivity extends AppCompatActivity {
 
                                         }else
                                         {
-
                                             Toast.makeText(ForgetActivity.this,"密码查找失败!",Toast.LENGTH_LONG).show();
                                         }
                                     }
